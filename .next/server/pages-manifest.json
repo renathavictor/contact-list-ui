@@ -2,8 +2,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/login": "pages/login.js",
-  "/registrar": "pages/registrar.js",
   "/": "pages/index.js",
   "/minhas-listas": "pages/minhas-listas.js"
 }
