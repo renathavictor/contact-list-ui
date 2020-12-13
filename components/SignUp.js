@@ -1,33 +1,71 @@
-import React from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import Router from 'next/router'
 import Link from 'next/link'
 
+import AlertContext from '../context/alert/alertContext'
+import AuthContext from '../context/auth/authContext'
 import Form from './styles/Form'
-import Error from './ErrorMessage'
 
 const SignUp = () => {
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState('')
+  const alertContext = useContext(AlertContext)
+  const authContext = useContext(AuthContext)
+
+  const { setAlert } = alertContext
+  const { register, error, clearErrors, isAuthenticated } = authContext
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      Router.push('/')
+    }
+    console.log(error)
+    if (error && error.message.match(/Email has already been taken/)) {
+      setAlert('Email já está em uso', 'danger')
+      clearErrors()
+    }
+  }, [error, isAuthenticated])
+
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirm: ''
+  })
+  const [loading, setLoading] = useState(false)
+
+  const { name, email, password, passwordConfirm } = user
+
+  const onChange = event => setUser({ ...user, [event.target.name]: event.target.value })
+
+  const onSubmit = event => {
+    event.preventDefault()
+    if (name === '' || email === '' || password === '' || passwordConfirm === '') {
+      setAlert('Por favor, digite todos com campos', 'danger')
+    } else if (password !== passwordConfirm) {
+      setAlert('As senhas não combinam', 'danger')
+    } else if (password.length < 6 || passwordConfirm < 6) {
+      setAlert('A senha deve ter no mínimo 6 caracteres', 'danger')
+    } else {
+      register({
+        ...user
+      })
+    }
+  }
 
   return (
     <>
-      {/* <CssBaseline /> */}
       <Form
-        onSubmit={async event => {
-          event.preventDefault()
-          console.log('submit')
-        }}      
+        onSubmit={onSubmit}      
       >
         <fieldset disabled={loading} aria-busy={loading}>
-          <h2>Crie sua conta no Contact Keeper</h2>
-          <Error error={error} />
+          <h3>Crie sua conta no Contact Keeper</h3>
           <label htmlFor="name">
             Nome
             <input
               type="text"
               name="name"
               placeholder="Digite seu nome"
-              // value={this.state.name}
-              // onChange={this.saveToState}
+              value={name}
+              onChange={onChange}
             />
           </label>
           <label htmlFor="email">
@@ -36,8 +74,8 @@ const SignUp = () => {
               type="email"
               name="email"
               placeholder="Digite seu email"
-              // value={this.state.email}
-              // onChange={this.saveToState}
+              value={email}
+              onChange={onChange}
             />
           </label>
           <label htmlFor="password">
@@ -46,18 +84,18 @@ const SignUp = () => {
               type="password"
               name="password"
               placeholder="Digite uma senha"
-              // value={this.state.password}
-              // onChange={this.saveToState}
+              value={password}
+              onChange={onChange}
             />
           </label>
           <label htmlFor="passwordConfirm">
             Confirmar senha
             <input
-              type="passwordConfirm"
+              type="password"
               name="passwordConfirm"
               placeholder="Confirme a senha"
-              // value={this.state.password}
-              // onChange={this.saveToState}
+              value={passwordConfirm}
+              onChange={onChange}
             />
           </label>
           <div style={{

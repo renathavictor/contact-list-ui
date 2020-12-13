@@ -4,6 +4,7 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import Header from './Header'
 import Footer from './Footer'
 import Meta from './Meta'
+import Alerts from './Alerts'
 
 const theme = {
   primary: '#089300',
@@ -11,6 +12,8 @@ const theme = {
   grey: '#3A3A3A',
   lightgrey: '#E1E1E1',
   offWhite: '#EDEDED',
+  danger: '#DC3545',
+  success: '#42CD45',
   maxWidth: '1000px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)'
 }
@@ -64,6 +67,7 @@ class Page extends Component {
             <Meta />
             <Header />
             <Inner>
+              <Alerts />
               {this.props.children}
             </Inner>
             {/* <Footer /> */}

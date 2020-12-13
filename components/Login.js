@@ -1,0 +1,105 @@
+import React, { useState, useEffect, useContext } from 'react'
+import Router from 'next/router'
+import Link from 'next/link'
+
+import AlertContext from '../context/alert/alertContext'
+import AuthContext from '../context/auth/authContext'
+import Form from './styles/Form'
+
+const Login = () => {
+  const alertContext = useContext(AlertContext)
+  const authContext = useContext(AuthContext)
+
+  const { setAlert } = alertContext
+  const { login, error, clearErrors, isAuthenticated } = authContext
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      Router.push('/')
+    }
+
+    if (error && error.message.match(/Invalid credentials/)) {
+      setAlert('Credencial inválida', 'danger')
+      clearErrors()
+    }
+  }, [error, isAuthenticated])
+
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  })
+  const [loading, setLoading] = useState(false)
+
+  const { email, password } = user
+
+  const onChange = event => setUser({ ...user, [event.target.name]: event.target.value })
+
+  const onSubmit = event => {
+    event.preventDefault()
+    if (email === '' || password === '') {
+      console.log('dasdasd')
+      setAlert('Por favor, digite todos com campos', 'danger')
+    } else {
+      console.log('on submit')
+      login({
+        email,
+        password
+      })
+    }
+  }
+
+  return (
+    <>
+      {/* <CssBaseline /> */}
+      <Form
+        onSubmit={onSubmit}      
+      >
+        <fieldset disabled={loading} aria-busy={loading}>
+          <h3>Fazer login em Contact Keeper</h3>
+          <label htmlFor="email">
+            Email
+            <input
+              type="email"
+              name="email"
+              placeholder="Digite seu email"
+              value={email}
+              onChange={onChange}
+            />
+          </label>
+          <label htmlFor="password">
+            Senha
+            <input
+              type="password"
+              name="password"
+              placeholder="Digite uma senha"
+              value={password}
+              onChange={onChange}
+            />
+          </label>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '2.5rem'
+          }}>
+            <Link href='/registrar'>
+              <a>Criar conta</a>
+            </Link>
+            <button type="submit">Entrar</button>
+          </div>
+        </fieldset>
+        {/* <Typography 
+          component="div" 
+          style={{
+            marginTop: '5rem', 
+            border: '1px solid #c6c6c6', 
+            height: '60vh'
+          }}
+        > */}
+
+        {/* </Typography> */}
+      </Form>
+    </>
+  )
+}
+
+export default Login
