@@ -5,10 +5,12 @@ import Link from 'next/link'
 import AlertContext from '../context/alert/alertContext'
 import ListContext from '../context/list/listContext'
 import ContactContext from '../context/contact/contactContext'
+import AuthContext from '../context/auth/authContext'
 
 import Form from './styles/Form'
 
 const NewList = () => {
+  const authContext = useContext(AuthContext)
   const alertContext = useContext(AlertContext)
   const listContext = useContext(ListContext)
   const contactContext = useContext(ContactContext)
@@ -16,6 +18,7 @@ const NewList = () => {
   const { setAlert } = alertContext
   const { current , addList, error, clearCurrent } = listContext
   const { addContact } = contactContext
+  const { isAuthenticated, loading } = authContext
 
   const [list, setList] = useState({
     title: ''
@@ -44,6 +47,10 @@ const NewList = () => {
   }
 
   useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      Router.push('/login')
+    }
+
     return () => {
       clearCurrent()
     }
@@ -53,21 +60,25 @@ const NewList = () => {
 
   const onSubmitContact = event => {
     event.preventDefault()
-    addContact({
-      id: current.id,
-      ...contact
-    })
-    if (!error) {
-      setAlert('Adicionado com sucesso!', 'success')
-      setContact({
-        name: '',
-        email: '',
-        phone: ''
+    if (name === '') {
+      setAlert('O nome não pode ficar em branco', 'danger')
+    } else {
+      addContact({
+        list: current.id,
+        ...contact
       })
+      if (!error) {
+        setAlert('Adicionado com sucesso!', 'success')
+        setContact({
+          name: '',
+          email: '',
+          phone: ''
+        })
+      }
     }
   }
 
-  return (
+  return isAuthenticated && (
     <>
       { !current ? <Form
         onSubmit={onSubmit}

@@ -43,11 +43,10 @@ const ContactState = props => {
     // }
   }
 
-  // Add Contact
   const addContact = async contact => {
     console.log('aqui contact ', contact)
     try {
-      const res = await api.post(`/lists/${contact.id}/contacts`, contact)
+      const res = await api.post(`/lists/${contact.list}/contacts`, contact)
       console.log('res ', res)
       dispatch({
         type: ADD_CONTACT,
@@ -61,7 +60,6 @@ const ContactState = props => {
     }
   }
 
-  // Delete Contact
   const deleteContact = async ({ list_id, contact_id }) => {
     try {
       await api.delete(`/lists/${list_id}/contacts/${contact_id}`)
@@ -79,10 +77,7 @@ const ContactState = props => {
     }
   }
 
-  // Update Contact
   const updateContact = async ({ list_id, contact }) => {
-    console.log('list_id ', list_id)
-    console.log(contact)
     try {
       await api.put(
         `/lists/${list_id}/contacts/${contact.id}`,
@@ -101,27 +96,22 @@ const ContactState = props => {
     }
   }
 
-  // Clear Contacts
   const clearContacts = () => {
     dispatch({ type: CLEAR_CONTACTS })
   }
 
-  // Set Current Contact
   const setCurrentContact = contact => {
     dispatch({ type: SET_CURRENT_CONTACT, payload: contact })
   }
 
-  // Clear Current Contact
   const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT_CONTACT })
   }
 
-  // Filter Contacts
   const filterContacts = text => {
     dispatch({ type: FILTER_CONTACTS, payload: text })
   }
 
-  // Clear Filter
   const clearFilter = () => {
     dispatch({ type: CLEAR_FILTER_CONTACT })
   }

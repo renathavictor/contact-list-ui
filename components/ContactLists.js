@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { VscAccount, VscDeviceMobile, VscMail,VscEdit, VscTrash } from "react-icons/vsc"
 import Button from '@material-ui/core/Button'
@@ -58,9 +58,16 @@ const CardContact = styled.div`
       border-color: ${props => props.theme.danger};
     }
   }
+
+  input {
+    margin: 10px auto;
+    height: 32px;
+    padding-left: 1rem;
+  }
 `
 
 const ContactLists = ({ list }) => {
+  const contactRef = useRef(null)
   const contactContext = useContext(ContactContext)
   const alertContext = useContext(AlertContext)
   const listContext = useContext(ListContext)
@@ -72,8 +79,6 @@ const ContactLists = ({ list }) => {
   const [contactToDelete, setContactToDelete] = useState({})
   const [contactToEdit, setContactToEdit] = useState(null)
   const [openDelete, setOpenDelete] = useState(false)
-
-  console.log(list)
 
   const handleOpenDelete = contact => {
     setOpenDelete(true)
@@ -87,6 +92,7 @@ const ContactLists = ({ list }) => {
   const handleOpenEdit = contact => {
     console.log('handle edit ', contact)
     setContactToEdit(contact)
+    contactRef.current = contact.id
   }
 
   const handleCloseEdit = contact => {
@@ -141,7 +147,25 @@ const ContactLists = ({ list }) => {
       {
         list && list.contacts.map(contact => (
           <CardContact key={contact.id}>
-            { !contactToEdit ? <>
+            { contactToEdit && contactRef.current === contact.id ? <div style={{ display: 'flex', flexFlow: 'column', margin: 'auto' }}>
+              <span style={{ marginTop: '1rem' }}>
+                <VscAccount />
+                <input style={{ width: '85%' }} type='text' name='name' value={contactToEdit.name} onChange={onChange} />
+              </span>
+              <span>
+                <VscDeviceMobile />
+                <input style={{ width: '85%' }} type='text' name='phone' value={contactToEdit.phone} onChange={onChange} />
+              </span>
+              <span>
+                <VscMail />
+                <input style={{ width: '85%' }} type='text' name='email' value={contactToEdit.email} onChange={onChange} />
+                </span>
+              <div style={{ marginTop: '1rem' }}>
+                <button onClick={handleEdit}>Salvar</button>
+                <button onClick={handleCloseEdit}>Cancelar</button>
+              </div>
+            </div>
+              : <div>
               <p><VscAccount />{contact.name}</p>
               <p><VscDeviceMobile />{contact.phone}</p>
               <p><VscMail />{contact.email}</p>
@@ -153,13 +177,8 @@ const ContactLists = ({ list }) => {
                   <VscTrash />Remover
                 </button>
               </p>
-            </>
-            : <div style={{ display: 'flex', flexFlow: 'column', margin: 'auto' }}>
-              <span><VscAccount /><input style={{ width: '85%' }} type='text' name='name' value={contactToEdit.name} onChange={onChange} /></span>
-              <span><VscDeviceMobile /><input style={{ width: '85%' }} type='text' name='phone' value={contactToEdit.phone} onChange={onChange} /></span>
-              <span><VscMail /><input style={{ width: '85%' }} type='text' name='email' value={contactToEdit.email} onChange={onChange} /></span>
-              <div><button onClick={handleEdit}>Salvar</button><button onClick={handleCloseEdit}>Cancelar</button></div>
-            </div>}
+            </div>
+            }
           </CardContact>
         ))
       }

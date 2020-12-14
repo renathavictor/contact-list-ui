@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { VscTrash, VscEdit } from 'react-icons/vsc'
+import Router from 'next/router'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -67,6 +68,8 @@ const Lists = () => {
   const listContext = useContext(ListContext)
 
   const { setAlert } = alertContext
+  const { isAuthenticated, loading } = authContext
+
   const { lists, getLists, setCurrent, current, deleteList, updateList, error, clearCurrent } = listContext
 
   // const [selectList, setSelectList] = useState(null)
@@ -78,6 +81,10 @@ const Lists = () => {
   useEffect(() => {
     authContext.loadUser()
     getLists()
+
+    if (!loading && !isAuthenticated) {
+      Router.push('/login')
+    }
 
     return () => {
       clearCurrent()
@@ -142,7 +149,7 @@ const Lists = () => {
   const onChange = event => setListToEdit({ ...listToEdit, [event.target.name]: event.target.value })
 
   console.log('current ', current)
-  return (
+  return isAuthenticated && (
     <>
       <ContainerList>
         <ul>
@@ -188,7 +195,7 @@ const Lists = () => {
         <DialogTitle id="responsive-dialog-title">{`Editar nome da lista - ${listToEdit.title}`}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <input type='text' name='title' placeholder={listToEdit.title} onChange={onChange} />
+            <input type='text' name='title' value={listToEdit.title} onChange={onChange} />
           </DialogContentText>
         </DialogContent>
         <DialogActions>

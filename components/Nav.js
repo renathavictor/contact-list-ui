@@ -3,12 +3,19 @@ import Link from 'next/link'
 import { VscSignOut } from 'react-icons/vsc'
 
 import AuthContext from '../context/auth/authContext'
+import ContactContext from '../context/contact/contactContext'
+import ListContext from '../context/list/listContext'
 import NavStyled from './styles/NavStyles'
 
 const Nav = () => {
   const authContext = useContext(AuthContext)
+  const contactContext = useContext(ContactContext)
+  const listContext = useContext(ListContext)
 
   const { isAuthenticated, logout } = authContext
+  const { deleteContact, updateContact, error } = contactContext
+  const { clearCurrent } = listContext
+
   const onLogout = () => {
     logout()
   }

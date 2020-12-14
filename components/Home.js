@@ -51,7 +51,7 @@ const Home = () => {
         <button onClick={() => Router.push('/nova-lista')}>
           <VscAdd /> CRIAR LISTA
         </button>
-        <button>
+        <button onClick={() => Router.push('/novo-contato')}>
           <VscAdd /> NOVO CONTATO
         </button>
       </ButtonHome>
