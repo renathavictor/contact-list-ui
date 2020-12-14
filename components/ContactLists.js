@@ -1,8 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { VscAccount, VscDeviceMobile, VscMail,VscEdit, VscTrash } from "react-icons/vsc"
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
-// import ListContext from '../context/list/listContext'
+import AlertContext from '../context/alert/alertContext'
+import ContactContext from '../context/contact/contactContext'
+import ListContext from '../context/list/listContext'
 
 const ContainerList = styled.div`
   display: flex;
@@ -53,36 +61,123 @@ const CardContact = styled.div`
 `
 
 const ContactLists = ({ list }) => {
-  // const listContext = useContext(ListContext)
-  // const { lists, getLists, setCurrent } = listContext
+  const contactContext = useContext(ContactContext)
+  const alertContext = useContext(AlertContext)
+  const listContext = useContext(ListContext)
+
+  const { setAlert } = alertContext
+  const { deleteContact, updateContact, error } = contactContext
+  const { setCurrent } = listContext
+
+  const [contactToDelete, setContactToDelete] = useState({})
+  const [contactToEdit, setContactToEdit] = useState(null)
+  const [openDelete, setOpenDelete] = useState(false)
+
   console.log(list)
+
+  const handleOpenDelete = contact => {
+    setOpenDelete(true)
+    setContactToDelete(contact)
+  }
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false)
+  }
+
+  const handleOpenEdit = contact => {
+    console.log('handle edit ', contact)
+    setContactToEdit(contact)
+  }
+
+  const handleCloseEdit = contact => {
+    setContactToEdit(null)
+  }
+
+
+  const handleEdit = contact => {
+    console.log('HANDLE EDIT')
+    if (contact.name === '') {
+      setAlert('O nome não pode ficar em branco', 'danger')
+    } else {
+      console.log('contactToEdit ', contactToEdit)
+      updateContact({
+        list_id: list.id,
+        contact: contactToEdit
+      })
+      if (!error) {
+        setContactToEdit(null)
+        list = { ...list, contacts: list.contacts.map(contact => contact.id !== contactToEdit.id ? contact : Object.assign({}, contact, contactToEdit))}
+        setCurrent(list)
+      }
+    }
+
+  }
+
+  const handleDelete = () => {
+    deleteContact({
+      list_id: list.id,
+      contact_id: contactToDelete.id
+    })
+    if (!error) {
+      setAlert('Contato deletado.', 'success')
+      list = { ...list, contacts: list.contacts.filter(contact => contact.id !== contactToDelete.id)}
+      setCurrent(list)
+      setOpenDelete(false)
+    } else {
+      console.error(error)
+      setAlert(error, 'danger')
+    }
+  }
+
   useEffect(() => {
-    // getLists()
-    // return () => {
-    //   cleanup
-    // }
-  }, [])
-  // console.log('lists ', lists)
+    console.log('error => ', error)
+  }, [error])
+
+  const onChange = event => setContactToEdit({ ...contactToEdit, [event.target.name]: event.target.value })
+
   return (
     <div>
       <h3>{ list.title }</h3>
       {
         list && list.contacts.map(contact => (
           <CardContact key={contact.id}>
-            <p><VscAccount />{contact.name}</p>
-            <p><VscDeviceMobile />{contact.phone}</p>
-            <p><VscMail />{contact.email}</p>
-            <p>
-              <button>
-                <VscEdit />Editar
-              </button>
-              <button>
-                <VscTrash />Remover
-              </button>
-            </p>
+            { !contactToEdit ? <>
+              <p><VscAccount />{contact.name}</p>
+              <p><VscDeviceMobile />{contact.phone}</p>
+              <p><VscMail />{contact.email}</p>
+              <p>
+                <button onClick={() => handleOpenEdit(contact)} >
+                  <VscEdit />Editar
+                </button>
+                <button onClick={() => handleOpenDelete(contact)} >
+                  <VscTrash />Remover
+                </button>
+              </p>
+            </>
+            : <div style={{ display: 'flex', flexFlow: 'column', margin: 'auto' }}>
+              <span><VscAccount /><input style={{ width: '85%' }} type='text' name='name' value={contactToEdit.name} onChange={onChange} /></span>
+              <span><VscDeviceMobile /><input style={{ width: '85%' }} type='text' name='phone' value={contactToEdit.phone} onChange={onChange} /></span>
+              <span><VscMail /><input style={{ width: '85%' }} type='text' name='email' value={contactToEdit.email} onChange={onChange} /></span>
+              <div><button onClick={handleEdit}>Salvar</button><button onClick={handleCloseEdit}>Cancelar</button></div>
+            </div>}
           </CardContact>
         ))
       }
+      <Dialog
+        open={openDelete}
+        onClose={handleCloseDelete}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">{`Deletar contato - ${contactToDelete.name}?`}</DialogTitle>
+        <DialogActions>
+          <Button autoFocus onClick={handleCloseDelete} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleDelete} color="primary" autoFocus>
+            Deletar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }

@@ -12,6 +12,8 @@ import {
 } from '../types'
 
 const listReducer = (state, action) => {
+  console.log('state list ', state)
+  console.log('action list ', action)
   switch (action.type) {
     case GET_LISTS:
       return {
@@ -30,15 +32,16 @@ const listReducer = (state, action) => {
       return {
         ...state,
         lists: state.lists.map(list =>
-          list._id === action.payload._id ? action.payload : list
+          list.id === action.payload.id ? action.payload : list
         ),
         loading: false
       }
     case DELETE_LIST:
+
       return {
         ...state,
         lists: state.lists.filter(
-          list => list._id !== action.payload
+          list => list.id !== action.payload
         ),
         loading: false
       }

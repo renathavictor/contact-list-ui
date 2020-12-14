@@ -62,40 +62,43 @@ const ContactState = props => {
   }
 
   // Delete Contact
-  const deleteContact = async id => {
-    // try {
-    //   await api.delete(`/api/contacts/${id}`)
+  const deleteContact = async ({ list_id, contact_id }) => {
+    try {
+      await api.delete(`/lists/${list_id}/contacts/${contact_id}`)
 
-    //   dispatch({
-    //     type: DELETE_CONTACT,
-    //     payload: id
-    //   })
-    // } catch (err) {
-    //   dispatch({
-    //     type: CONTACT_ERROR,
-    //     payload: err.response.msg
-    //   })
-    // }
+      dispatch({
+        type: DELETE_CONTACT,
+        payload: contact_id
+      })
+    } catch (err) {
+      console.log(err)
+      dispatch({
+        type: CONTACT_ERROR,
+        payload: 'Erro ao deletar contato'
+      })
+    }
   }
 
   // Update Contact
-  const updateContact = async contact => {
-    // try {
-    //   const res = await api.put(
-    //     `/api/contacts/${contact._id}`,
-    //     contact
-    //   )
+  const updateContact = async ({ list_id, contact }) => {
+    console.log('list_id ', list_id)
+    console.log(contact)
+    try {
+      await api.put(
+        `/lists/${list_id}/contacts/${contact.id}`,
+        contact
+      )
 
-    //   dispatch({
-    //     type: UPDATE_CONTACT,
-    //     payload: res.data
-    //   })
-    // } catch (err) {
-    //   dispatch({
-    //     type: CONTACT_ERROR,
-    //     payload: err.response.msg
-    //   })
-    // }
+      dispatch({
+        type: UPDATE_CONTACT,
+        payload: { list_id, contact }
+      })
+    } catch (err) {
+      dispatch({
+        type: CONTACT_ERROR,
+        payload: 'Erro ao atualizar o contato'
+      })
+    }
   }
 
   // Clear Contacts
@@ -104,7 +107,7 @@ const ContactState = props => {
   }
 
   // Set Current Contact
-  const setCurrent = contact => {
+  const setCurrentContact = contact => {
     dispatch({ type: SET_CURRENT_CONTACT, payload: contact })
   }
 
@@ -132,7 +135,7 @@ const ContactState = props => {
         error: state.error,
         addContact,
         deleteContact,
-        setCurrent,
+        setCurrentContact,
         clearCurrent,
         updateContact,
         filterContacts,

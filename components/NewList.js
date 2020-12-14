@@ -14,7 +14,7 @@ const NewList = () => {
   const contactContext = useContext(ContactContext)
 
   const { setAlert } = alertContext
-  const { current , addList, error } = listContext
+  const { current , addList, error, clearCurrent } = listContext
   const { addContact } = contactContext
 
   const [list, setList] = useState({
@@ -42,7 +42,13 @@ const NewList = () => {
       })
     }
   }
-  
+
+  useEffect(() => {
+    return () => {
+      clearCurrent()
+    }
+  }, [])
+
   console.log('current ', current)
 
   const onSubmitContact = event => {
@@ -64,7 +70,7 @@ const NewList = () => {
   return (
     <>
       { !current ? <Form
-        onSubmit={onSubmit}      
+        onSubmit={onSubmit}
       >
         <fieldset>
           <h3>Crie uma nova lista</h3>
@@ -91,7 +97,7 @@ const NewList = () => {
         </fieldset>
       </Form>
       : <Form
-        onSubmit={onSubmitContact}      
+        onSubmit={onSubmitContact}
       >
         <fieldset>
           <h3>Adicionar contato na lista: {current.title}</h3>

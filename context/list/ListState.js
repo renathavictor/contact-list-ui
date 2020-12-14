@@ -45,7 +45,7 @@ const ListState = props => {
   const addList = async list => {
     try {
       const res = await api.post('/lists', list)
-      
+
       dispatch({
         type: ADD_LIST,
         payload: res.data
@@ -59,38 +59,39 @@ const ListState = props => {
   }
 
   const deleteList = async id => {
-    // try {
-    //   await api.delete(`/api/lists/${id}`)
+    try {
+      await api.delete(`/lists/${id}`)
 
-    //   dispatch({
-    //     type: DELETE_LIST,
-    //     payload: id
-    //   })
-    // } catch (err) {
-    //   dispatch({
-    //     type: LIST_ERROR,
-    //     payload: err.response.msg
-    //   })
-    // }
+      dispatch({
+        type: DELETE_LIST,
+        payload: id
+      })
+    } catch (err) {
+      dispatch({
+        type: LIST_ERROR,
+        payload: err.response.msg
+      })
+    }
   }
 
   const updateList = async list => {
-    // try {
-    //   const res = await api.put(
-    //     `/api/lists/${list._id}`,
-    //     list
-    //   )
-
-    //   dispatch({
-    //     type: UPDATE_LIST,
-    //     payload: res.data
-    //   })
-    // } catch (err) {
-    //   dispatch({
-    //     type: LIST_ERROR,
-    //     payload: err.response.msg
-    //   })
-    // }
+    console.log('list ---- ', list)
+    try {
+      const res = await api.put(
+        `/lists/${list.id}`,
+        list
+      )
+      console.log(res)
+      dispatch({
+        type: UPDATE_LIST,
+        payload: res.data
+      })
+    } catch (err) {
+      dispatch({
+        type: LIST_ERROR,
+        payload: err.response.msg
+      })
+    }
   }
 
   const clearLists = () => {
