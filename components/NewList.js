@@ -100,7 +100,7 @@ const NewList = () => {
             justifyContent: 'space-between',
             marginTop: '2.5rem'
           }}>
-            <Link href='/login'>
+            <Link href='/novo-contato'>
               <a>Adicione contato em vez disso</a>
             </Link>
             <button type="submit">Criar</button>
@@ -147,8 +147,8 @@ const NewList = () => {
             justifyContent: 'space-between',
             marginTop: '2.5rem'
           }}>
-            <Link href='/login'>
-              <a>Adicione contato em vez disso</a>
+            <Link href='/novo-contato'>
+              <a>Adicione contatos em outra lista</a>
             </Link>
             <button type="submit">Adicionar</button>
           </div>
