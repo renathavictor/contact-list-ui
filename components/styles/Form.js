@@ -42,6 +42,7 @@ const Form = styled.form`
   button,
   input[type='submit'] {
     cursor: pointer;
+    border-radius: 3px;
     width: auto;
     background: red;
     color: white;
@@ -73,7 +74,7 @@ const Form = styled.form`
       height: 10px;
       content: '';
       display: block;
-      background-image: linear-gradient(to right, #089300 0%, #e2b04a 50%, #089300 100%);
+      background-image: linear-gradient(to right, #2B0F6A 0%, #6436E2 50%, #2B0F6A 100%);
     }
     &[aria-busy='true']::before {
       background-size: 50% auto;

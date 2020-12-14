@@ -1,11 +1,13 @@
 import React from 'react'
 
-const Categories = () => {
+import withPrivateRoute from '../components/withPrivateRoute'
+
+const Contatos = () => {
   return (
     <div>
-      categories
+      Contatos
     </div>
   )
 }
 
-export default Categories
+export default withPrivateRoute(Contatos)

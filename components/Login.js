@@ -50,7 +50,6 @@ const Login = () => {
 
   return (
     <>
-      {/* <CssBaseline /> */}
       <Form
         onSubmit={onSubmit}      
       >
@@ -87,16 +86,6 @@ const Login = () => {
             <button type="submit">Entrar</button>
           </div>
         </fieldset>
-        {/* <Typography 
-          component="div" 
-          style={{
-            marginTop: '5rem', 
-            border: '1px solid #c6c6c6', 
-            height: '60vh'
-          }}
-        > */}
-
-        {/* </Typography> */}
       </Form>
     </>
   )

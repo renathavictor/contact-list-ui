@@ -29,10 +29,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/minhas-listas": [
+    "/nova-lista": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/minhas-listas.js"
+      "static/chunks/pages/nova-lista.js"
     ]
   },
   "ampFirstPages": []

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useContext } from 'react'
 
 import api from '../../utils/api'
 import AuthContext from './authContext'
@@ -30,10 +30,7 @@ const AuthState = props => {
     setAuthToken(localStorage.token)
 
     try {
-      // testar com o login para ver se funciona
       const res = await api.get('/auth')
-      console.log('RESPONSE ', res)
-      // const res = await api.post('/auth/login', { email: state.user.email, password: state.user.password })
       dispatch({
         type: USER_LOADED,
         payload: res.data
@@ -45,12 +42,8 @@ const AuthState = props => {
 
   // register user
   const register = async formData => {
-    const config = {
-      headers: { 'Content-Type': 'application/json' }
-    }
     try {
-      const res = await api.post('/users/signup', formData, config)
-      console.log('res => ', res)
+      const res = await api.post('/users/signup', formData)
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
@@ -58,7 +51,6 @@ const AuthState = props => {
 
       loadUser()
     } catch (error) {
-      console.log('ERROR ', error)
       dispatch({
         type: REGISTER_FAIL,
         payload: error.response.data
@@ -70,11 +62,8 @@ const AuthState = props => {
   // login user
   const login = async formData => {
     console.log('testar')
-    const config = {
-      headers: { 'Content-Type': 'application/json' }
-    }
     try {
-      const res = await api.post('/auth/login', formData, config)
+      const res = await api.post('/auth/login', formData)
       console.log('res => ', res)
       dispatch({
         type: LOGIN_SUCCESS,

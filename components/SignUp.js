@@ -109,16 +109,6 @@ const SignUp = () => {
             <button type="submit">Cadastrar!</button>
           </div>
         </fieldset>
-        {/* <Typography 
-          component="div" 
-          style={{
-            marginTop: '5rem', 
-            border: '1px solid #c6c6c6', 
-            height: '60vh'
-          }}
-        > */}
-
-        {/* </Typography> */}
       </Form>
     </>
   )

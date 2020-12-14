@@ -7,7 +7,8 @@ import Meta from './Meta'
 import Alerts from './Alerts'
 
 const theme = {
-  primary: '#089300',
+  primary: '#6436E2',
+  secundary: '#2B0F6A',
   black: '#393939',
   grey: '#3A3A3A',
   lightgrey: '#E1E1E1',
