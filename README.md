@@ -12,5 +12,5 @@ Aplicação para projeto da disciplina RAD - IFPB
 
 ### Para Iniciar a aplicação
 
-> npm i
+> npm i\
 > npm run dev
