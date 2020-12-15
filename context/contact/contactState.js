@@ -44,7 +44,6 @@ const ContactState = props => {
   }
 
   const addContact = async contact => {
-    console.log('aqui contact ', contact)
     try {
       const res = await api.post(`/lists/${contact.list}/contacts`, contact)
       console.log('res ', res)
@@ -55,7 +54,7 @@ const ContactState = props => {
     } catch (err) {
       dispatch({
         type: CONTACT_ERROR,
-        payload: err.response
+        payload: 'Erro ao adicionar contato'
       })
     }
   }

@@ -2,9 +2,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/nova-lista": "pages/nova-lista.js",
-  "/novo-contato": "pages/novo-contato.js",
   "/minhas-listas": "pages/minhas-listas.js",
-  "/": "pages/index.js",
-  "/login": "pages/login.js"
+  "/": "pages/index.js"
 }

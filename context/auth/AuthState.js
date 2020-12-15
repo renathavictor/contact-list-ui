@@ -51,17 +51,16 @@ const AuthState = props => {
 
       loadUser()
     } catch (error) {
+      console.log('error ', error)
       dispatch({
         type: REGISTER_FAIL,
         payload: error.response.data
       })
     }
   }
-  
 
-  // login user
+
   const login = async formData => {
-    console.log('testar')
     try {
       const res = await api.post('/auth/login', formData)
       console.log('res => ', res)

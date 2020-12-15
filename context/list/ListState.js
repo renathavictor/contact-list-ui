@@ -75,7 +75,6 @@ const ListState = props => {
   }
 
   const updateList = async list => {
-    console.log('list ---- ', list)
     try {
       const res = await api.put(
         `/lists/${list.id}`,

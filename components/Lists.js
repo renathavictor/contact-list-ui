@@ -155,7 +155,7 @@ const Lists = () => {
         <ul>
         { lists && lists.map(list => (
             <li key={list.id} className={'list-title'}>
-              <p onClick={handleClickList} id={list.id}>{list.title}</p>
+              <p style={{ width: '80%' }} onClick={handleClickList} id={list.id}>{list.title}</p>
               <p>
                 <VscEdit style={{ marginRight: '1rem' }} onClick={() => handleOpenEdit(list)} />
                 <VscTrash value={list.id} onClick={()=> handleOpenDelete(list)} />
