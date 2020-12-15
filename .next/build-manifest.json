@@ -29,6 +29,16 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
+    "/login": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/login.js"
+    ],
+    "/minhas-listas": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/minhas-listas.js"
+    ],
     "/nova-lista": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
