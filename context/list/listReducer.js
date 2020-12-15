@@ -12,8 +12,6 @@ import {
 } from '../types'
 
 const listReducer = (state, action) => {
-  console.log('state list ', state)
-  console.log('action list ', action)
   switch (action.type) {
     case GET_LISTS:
       return {

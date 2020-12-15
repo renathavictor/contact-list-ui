@@ -37,10 +37,8 @@ const Login = () => {
   const onSubmit = event => {
     event.preventDefault()
     if (email === '' || password === '') {
-      console.log('dasdasd')
       setAlert('Por favor, digite todos com campos', 'danger')
     } else {
-      console.log('on submit')
       login({
         email,
         password
@@ -51,7 +49,7 @@ const Login = () => {
   return (
     <>
       <Form
-        onSubmit={onSubmit}      
+        onSubmit={onSubmit}
       >
         <fieldset disabled={loading} aria-busy={loading}>
           <h3>Fazer login em Contact Keeper</h3>

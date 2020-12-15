@@ -46,7 +46,6 @@ const ContactState = props => {
   const addContact = async contact => {
     try {
       const res = await api.post(`/lists/${contact.list}/contacts`, contact)
-      console.log('res ', res)
       dispatch({
         type: ADD_CONTACT,
         payload: res.data
@@ -68,7 +67,6 @@ const ContactState = props => {
         payload: contact_id
       })
     } catch (err) {
-      console.log(err)
       dispatch({
         type: CONTACT_ERROR,
         payload: 'Erro ao deletar contato'

@@ -87,7 +87,6 @@ const Lists = () => {
   }, [lists])
 
   const handleClickList = e => {
-    console.log('clicou na lista', e.target.id)
     const id = e.target.id
     const listFilter = lists.filter(list => String(list.id) === id)[0]
     listFilter && setSelectList(listFilter)
@@ -103,7 +102,6 @@ const Lists = () => {
   }
 
   const handleDeleteList = () => {
-    console.log('delete lista ', listToDelete.id)
     deleteList(listToDelete.id)
     if (!error) {
       setAlert('Lista deletada.', 'success')
@@ -124,7 +122,6 @@ const Lists = () => {
   }
 
   const handleEditList = () => {
-    console.log('Edit lista ', listToEdit.id)
     updateList({
       id: listToEdit.id,
       ...listToEdit
@@ -139,7 +136,6 @@ const Lists = () => {
 
   const onChange = event => setListToEdit({ ...listToEdit, [event.target.name]: event.target.value })
 
-  console.log('selectList ', selectList)
   return (
     <>
       <ContainerList>

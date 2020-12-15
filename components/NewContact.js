@@ -46,7 +46,6 @@ const NewContact = () => {
     if (name === '' || list === '') {
       setAlert('O nome ou a lista não pode ficar em branco', 'danger')
     } else {
-      console.log('contact ----- ', contact)
       addContact({
         ...contact
       })

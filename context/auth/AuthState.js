@@ -51,7 +51,6 @@ const AuthState = props => {
 
       loadUser()
     } catch (error) {
-      console.log('error ', error)
       dispatch({
         type: REGISTER_FAIL,
         payload: error.response.data
@@ -63,7 +62,6 @@ const AuthState = props => {
   const login = async formData => {
     try {
       const res = await api.post('/auth/login', formData)
-      console.log('res => ', res)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
@@ -71,7 +69,6 @@ const AuthState = props => {
 
       loadUser()
     } catch (error) {
-      console.log('ERROR ', error)
       dispatch({
         type: LOGIN_FAIL,
         payload: error.response.data

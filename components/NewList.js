@@ -56,8 +56,6 @@ const NewList = () => {
     }
   }, [])
 
-  console.log('current ', current)
-
   const onSubmitContact = event => {
     event.preventDefault()
     if (name === '') {
