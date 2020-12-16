@@ -23,7 +23,7 @@ const listReducer = (state, action) => {
       return {
         ...state,
         current: action.payload,
-        lists: [action.payload, ...state.lists],
+        // lists: [action.payload, ...state.lists],
         loading: false
       }
     case UPDATE_LIST:

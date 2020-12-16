@@ -47,6 +47,8 @@ const NewList = () => {
   }
 
   useEffect(() => {
+    authContext.loadUser()
+
     if (!loading && !isAuthenticated) {
       Router.push('/login')
     }

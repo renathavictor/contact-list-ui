@@ -32,6 +32,8 @@ const NewContact = () => {
   const onChangeContact = event => setContact({ ...contact, [event.target.name]: event.target.value })
 
   useEffect(() => {
+    authContext.loadUser()
+
     if (!loading && !isAuthenticated) {
       Router.push('/login')
     }

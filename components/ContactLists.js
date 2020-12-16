@@ -132,9 +132,6 @@ const ContactLists = ({ list }) => {
     }
   }
 
-  useEffect(() => {
-  }, [error])
-
   const onChange = event => setContactToEdit({ ...contactToEdit, [event.target.name]: event.target.value })
 
   return (
