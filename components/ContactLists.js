@@ -90,7 +90,6 @@ const ContactLists = ({ list }) => {
   }
 
   const handleOpenEdit = contact => {
-    console.log('handle edit ', contact)
     setContactToEdit(contact)
     contactRef.current = contact.id
   }
@@ -101,11 +100,9 @@ const ContactLists = ({ list }) => {
 
 
   const handleEdit = contact => {
-    console.log('HANDLE EDIT')
     if (contact.name === '') {
       setAlert('O nome não pode ficar em branco', 'danger')
     } else {
-      console.log('contactToEdit ', contactToEdit)
       updateContact({
         list_id: list.id,
         contact: contactToEdit
@@ -134,10 +131,6 @@ const ContactLists = ({ list }) => {
       setAlert(error, 'danger')
     }
   }
-
-  useEffect(() => {
-    console.log('error => ', error)
-  }, [error])
 
   const onChange = event => setContactToEdit({ ...contactToEdit, [event.target.name]: event.target.value })
 

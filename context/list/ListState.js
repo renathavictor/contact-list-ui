@@ -80,7 +80,6 @@ const ListState = props => {
         `/lists/${list.id}`,
         list
       )
-      console.log(res)
       dispatch({
         type: UPDATE_LIST,
         payload: res.data

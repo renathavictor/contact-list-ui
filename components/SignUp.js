@@ -17,7 +17,6 @@ const SignUp = () => {
     if (isAuthenticated) {
       Router.push('/')
     }
-    console.log(error)
     if (error && error.message.match(/Email has already been taken/)) {
       setAlert('Email já está em uso', 'danger')
       clearErrors()
@@ -54,7 +53,7 @@ const SignUp = () => {
   return (
     <>
       <Form
-        onSubmit={onSubmit}      
+        onSubmit={onSubmit}
       >
         <fieldset disabled={loading} aria-busy={loading}>
           <h3>Crie sua conta no Contact Keeper</h3>

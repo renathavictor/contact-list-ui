@@ -47,6 +47,8 @@ const NewList = () => {
   }
 
   useEffect(() => {
+    authContext.loadUser()
+
     if (!loading && !isAuthenticated) {
       Router.push('/login')
     }
@@ -55,8 +57,6 @@ const NewList = () => {
       clearCurrent()
     }
   }, [])
-
-  console.log('current ', current)
 
   const onSubmitContact = event => {
     event.preventDefault()

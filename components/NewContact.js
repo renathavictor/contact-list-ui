@@ -32,6 +32,8 @@ const NewContact = () => {
   const onChangeContact = event => setContact({ ...contact, [event.target.name]: event.target.value })
 
   useEffect(() => {
+    authContext.loadUser()
+
     if (!loading && !isAuthenticated) {
       Router.push('/login')
     }
@@ -46,7 +48,6 @@ const NewContact = () => {
     if (name === '' || list === '') {
       setAlert('O nome ou a lista não pode ficar em branco', 'danger')
     } else {
-      console.log('contact ----- ', contact)
       addContact({
         ...contact
       })

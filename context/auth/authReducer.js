@@ -10,7 +10,6 @@ import {
 } from '../types'
 
 const authReducer = (state, action) => {
-  console.log('authReducer action ', action)
   switch (action.type) {
     case USER_LOADED:
       return {
